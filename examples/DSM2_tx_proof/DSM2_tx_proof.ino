@@ -69,7 +69,7 @@ void setup() {
 void loop() {
   int current_step = next_step();
   for( byte i = 0; i < tx.channel_count; i++ ){
-    if (i != 1){
+    if (i != 0){
       tx.set_channel(i, current_step, MAX_VAL);
     }
   }
