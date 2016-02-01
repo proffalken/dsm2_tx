@@ -20,7 +20,7 @@
 #include "dsm2_tx.h"
 
 #define BIND_SWITCH  2
-#define BIND_LED     3
+#define BIND_LED     13
 #define ERROR_LED    5
 
 DSM2_tx tx(6);
@@ -60,21 +60,18 @@ int next_step() {
 }
 
 void setup() {
-  pinMode(BIND_SWITCH, INPUT);
   pinMode(BIND_LED, OUTPUT);
   pinMode(ERROR_LED, OUTPUT);
-
   tx.begin();
-  
-  if( digitalRead(BIND_SWITCH) == HIGH ) {
     tx.bind(bind_cb);
-  }
 }
 
 void loop() {
   int current_step = next_step();
   for( byte i = 0; i < tx.channel_count; i++ ){
-    tx.set_channel(i, current_step, MAX_VAL);
+    if (i != 1){
+      tx.set_channel(i, current_step, MAX_VAL);
+    }
   }
   tx.send_frame();
 }
